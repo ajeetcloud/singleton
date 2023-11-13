@@ -2,10 +2,15 @@ package com.singleton.basic;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class SingletonSafeGuardedTest {
 
@@ -23,5 +28,30 @@ public class SingletonSafeGuardedTest {
             e.printStackTrace();
         }
         assertEquals(instance1, instance2);
+    }
+
+    @Test
+    public void testSingletonSerialization() {
+        // Serialize the singleton instance
+        SingletonSafeGuarded instance1 = SingletonSafeGuarded.getInstance();
+        byte[] serializedSingleton = null;
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             ObjectOutputStream out = new ObjectOutputStream(bos)) {
+            out.writeObject(instance1); // serializing 'instance1'
+            serializedSingleton = bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Deserializing 'instance1'
+        SingletonSafeGuarded instance2 = null;
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(serializedSingleton);
+             ObjectInputStream in = new ObjectInputStream(bis)) {
+            instance2 = (SingletonSafeGuarded) in.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        assertSame(instance1, instance2);
     }
 }

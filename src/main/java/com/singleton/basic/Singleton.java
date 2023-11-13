@@ -1,7 +1,8 @@
 package com.singleton.basic;
 
-public class Singleton {
+import java.io.Serializable;
 
+public class Singleton implements Serializable {
     private static volatile Singleton instance;
 
     private Singleton() {

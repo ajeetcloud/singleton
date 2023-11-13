@@ -1,6 +1,8 @@
 package com.singleton.basic;
 
-public class SingletonSafeGuarded {
+import java.io.Serializable;
+
+public class SingletonSafeGuarded implements Serializable {
 
     private static volatile SingletonSafeGuarded instance;
 
@@ -18,6 +20,10 @@ public class SingletonSafeGuarded {
                 }
             }
         }
+        return instance;
+    }
+
+    protected Object readResolve() {
         return instance;
     }
 }
