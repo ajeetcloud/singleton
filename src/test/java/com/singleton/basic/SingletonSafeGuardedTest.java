@@ -53,5 +53,6 @@ public class SingletonSafeGuardedTest {
         }
         
         assertSame(instance1, instance2);
+        assertEquals(instance1, instance2);
     }
 }
