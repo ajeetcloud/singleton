@@ -10,6 +10,7 @@ public class SingletonSafeGuarded implements Serializable {
         if (instance != null) {
             throw new IllegalStateException("instance already present");
         }
+        // do the heavy lifting here
     }
 
     public static SingletonSafeGuarded getInstance() {
